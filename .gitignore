@@ -39,3 +39,4 @@ rasa/Lib/site-packages/jaxlib/xla_extension.pyd
 *.bak
 *.swp
 .DS_Store
+rasa/*
