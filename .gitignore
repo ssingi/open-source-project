@@ -1,42 +1,28 @@
-venv/
-rasa/
+# 가상환경, 라이브러리 제외
 __pycache__/
-*.py[cod]
-*.so
-*.egg
-*.egg-info/
-dist/
-build/
-.eggs/
-.vscode/
-.idea/
-models/
-*.log
-.DS_Store
-Thumbs.db
-*.db
-.env
-__pycache__/
-*.py[cod]
+*.pyc
 *.pyo
 *.pyd
 *.db
-.venv/
-venv/
-env/
-models/
-.rasa/
+*.sqlite3
+
+# VSCode나 IDE 설정
 .vscode/
 .idea/
-dist/
-build/
-*.egg-info/
-rasa/Lib/site-packages/tensorflow/python/_pywrap_tensorflow_internal.pyd
-rasa/Lib/site-packages/jaxlib/xla_extension.pyd
-*.log
-.env
-.coverage
-*.bak
-*.swp
+
+# 시스템 파일
 .DS_Store
-rasa/*
+Thumbs.db
+
+# 모델, 캐시, 로그, LFS 대상 제외
+models/
+*.tar.gz
+*.log
+.rasa/
+*.db
+.env
+*.env.*
+
+# 라이브러리 설치 경로 제외 (예: rasa 폴더 내 site-packages)
+rasa/
+!rasa/README.md  # 필요하다면 예외 설정
