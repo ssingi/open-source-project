@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+*.venv
+venv/
+ENV/
+env/
+*.egg-info/
+.eggs/
+*.egg
+
+# VSCode 설정
+.vscode/
+
+# OS별 시스템 파일
+.DS_Store
+Thumbs.db
+
+# Rasa 모델 및 로그
+models/
+*.db
+*.log
+
+# Jupyter 노트북 체크포인트
+.ipynb_checkpoints/
+
+# 환경변수 및 보안정보 파일
+.env
+
+# 기타
+*.sqlite3

@@ -1,0 +1,21 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - 안녕
+      - 안녕하세요
+      - 하이
+
+  - intent: recommend_destination
+    examples: |
+      - 일본 여행지 추천해줘
+      - 일본에서 어디를 가야 할까?
+      - 일본에서 가볼 만한 곳 추천해줘
+      - 일본 여행지 알려줘
+
+  - intent: goodbye
+    examples: |
+      - 잘 가
+      - 안녕히 계세요
+      - 다음에 또 올게

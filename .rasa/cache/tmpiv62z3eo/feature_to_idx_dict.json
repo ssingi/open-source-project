@@ -1,0 +1,40 @@
+{
+  "0###low": {
+    "False": 0
+  },
+  "0###title": {
+    "False": 1
+  },
+  "0###upper": {
+    "False": 2
+  },
+  "1###BOS": {
+    "False": 3,
+    "True": 4
+  },
+  "1###EOS": {
+    "False": 5,
+    "True": 6
+  },
+  "1###digit": {
+    "False": 7
+  },
+  "1###low": {
+    "False": 8
+  },
+  "1###title": {
+    "False": 9
+  },
+  "1###upper": {
+    "False": 10
+  },
+  "2###low": {
+    "False": 11
+  },
+  "2###title": {
+    "False": 12
+  },
+  "2###upper": {
+    "False": 13
+  }
+}
