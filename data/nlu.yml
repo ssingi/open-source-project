@@ -1,5 +1,5 @@
 # 사용자 입력이 어떤 intent이고, 어떤 entity가 포함되었는지 학습시키는 데이터
-# intent: greet, recommend_city, plan_city, fallback, goodbye
+# 기본적인 intent: greet, goodbye, bot_introduction, request_recommendation
 
 version: "3.1"
 
@@ -10,24 +10,30 @@ nlu:
       - 하이
       - 반가워
 
-  - intent: recommend_city
+  - intent: goodbye
     examples: |
-      - 일본 여행지 추천해줘
-      - 일본 여행지 알려줘
-      - 일본 여행지 추천해줄래?
-      - 일본 여행지 추천해줄 수 있어?
+      - 잘가
+      - 다음에 또 올게
+      - 또 봐
+      - 다음에 봐
+
+  - intent: recommend_question_list
+    examples: |
+      - 가능한 질문 목록
+      - 어떤 질문을 할 수 있어?
+      - 질문 목록 보여줘
+      - 질문 예시 좀 보여줘
+      - 질문 리스트 알려줘
 
   - intent: plan_city
     examples: |
+      - 여행지 추천해줘
+      - 일본에서 어디 가는 게 좋을까?
+      - 일본의 다른 지역 추천해줘
       - 지역별 특징 알려줘
       - [도쿄](city) 일정 알려줘
-      - [도쿄](city) 여행 코스 추천해줘
-      - [도쿄](city) 가면 뭐하면 좋을까?
       - [오사카](city) 일정 만들어줘
-      - [오사카](city) 여행 일정 알려줘
-      - [오사카](city) 코스 추천해줘
       - [교토](city) 3박 4일 일정 짜줘
-      - [교토](city)에서 뭘 보면 좋을까?
       - [후쿠오카](city) 여행 계획 추천해줘
       - [후쿠오카](city) 가고 싶은데 일정 짜줄래?
       - [아키하바라](city) 일정 추천해줘
@@ -49,12 +55,40 @@ nlu:
       - [유후인](city) 일정 짜줄 수 있어?
       - [구마모토](city) 여행 일정 알려줘
 
-  - lookup: city
-    examples: data/lookup/city.txt
-
-  - regex: city
+  - intent: travel_checklist
     examples: |
-      - 도쿄|오사카|교토|후쿠오카|아키하바라|삿포로|나고야|고베|요코하마|센다이|히로시마|니가타|시즈오카|가나자와|나라|하코네|가마쿠라|다카야마|오타루|나가사키|유후인|구마모토
+      - 일본 여행 준비물 체크리스트 알려줘
+      - 일본 여행 준비물 뭐 챙겨야 해?
+      - 일본 여행 필수 아이템 뭐가 있어?
+      - 일본 여행 준비물 리스트 좀 만들어줘
+
+  - intent: travel_sim_card
+    examples: |
+      - 일본에서 SIM 카드 어떻게 사요?
+      - 일본 여행 중 데이터 통신 어떻게 해요?
+      - 일본에서 유심 구매 방법 알려줘
+      - 일본에서 포켓 와이파이 대여할 수 있어요?
+
+  - intent: travel_luggage_airport
+    examples: |
+      - 수하물 몇 kg까지 가져갈 수 있어?
+      - 일본 여행 시 기내 수하물 규정이 궁금해요
+      - 나리타 공항에서 도쿄 시내까지 어떻게 가요?
+      - 간사이 공항에서 오사카 도심은 뭐 타고 가야 해?
+
+  - intent: travel_transportation
+    examples: |
+      - JR 패스는 어디서 사요?
+      - 스이카랑 이코카 차이점 알려줘
+      - 일본에서 교통카드 어떻게 써요?
+      - 일본 지하철 처음 타보는데 복잡하지 않을까요?
+
+  - intent: travel_money
+    examples: |
+      - 일본은 현금 많이 써요?
+      - 일본에서 카드 결제 잘 돼요?
+      - 일본 가기 전에 환전 어디서 해요?
+      - 일본 ATM에서 돈 뽑을 수 있어요?
 
   - intent: fallback
     examples: |
@@ -63,9 +97,27 @@ nlu:
       - 뭐가 좋을지 모르겠어
       - 뭘 말해야 할지 모르겠네
 
-  - intent: goodbye
+  - lookup: city
     examples: |
-      - 잘가
-      - 다음에 또 올게
-      - 또 봐
-      - 다음에 봐
+      - 도쿄
+      - 오사카
+      - 교토
+      - 후쿠오카
+      - 아키하바라
+      - 삿포로
+      - 나고야
+      - 고베
+      - 요코하마
+      - 센다이
+      - 히로시마
+      - 니가타
+      - 시즈오카
+      - 가나자와
+      - 나라
+      - 하코네
+      - 가마쿠라
+      - 다카야마
+      - 오타루
+      - 나가사키
+      - 유후인
+      - 구마모토
