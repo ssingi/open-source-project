@@ -39,7 +39,14 @@ class ActionGeminiFallback(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         user_msg = tracker.latest_message.get("text", "")
         gemini_api_key = os.getenv("GEMINI_API_KEY")
-        gemini_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + gemini_api_key
+        gemini_url ="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}" \
+            .replace("${GEMINI_API_KEY}", gemini_api_key)
+        if not gemini_api_key:
+            dispatcher.utter_message(text="Gemini API 키가 설정되어 있지 않습니다.")
+            return []
+        if not user_msg:
+            dispatcher.utter_message(text="사용자 메시지가 없습니다.")
+            return []
         headers = {"Content-Type": "application/json"}
         data = {
             "contents": [{"parts": [{"text": user_msg}]}]

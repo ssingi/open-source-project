@@ -15,3 +15,24 @@ rules:
     steps:
       - intent: fallback
       - action: action_gemini_fallback
+
+  - rule: 도시명만 입력 시 여행 계획 안내
+    steps:
+      - intent: plan_trip
+        entities:
+          - city: 도쿄
+      - action: action_plan_trip
+
+  - rule: 도시명만 입력 시 여행 계획 안내2
+    steps:
+      - intent: plan_trip
+        entities:
+          - city: 교토
+      - action: action_plan_trip
+
+  - rule: 도시명만 입력 시 여행 계획 안내3
+    steps:
+      - intent: plan_trip
+        entities:
+          - city: 오사카
+      - action: action_plan_trip
