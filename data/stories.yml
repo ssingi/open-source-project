@@ -28,11 +28,6 @@ stories:
       - intent: deny
       - action: utter_goodbye
 
-  - story: 일본 여행지 추천
-    steps:
-      - intent: recommend_destination
-      - action: utter_recommend_japan
-
   - story: 실시간 날씨 정보
     steps:
       - intent: ask_weather
@@ -42,3 +37,60 @@ stories:
     steps:
       - intent: greet
       - action: utter_greet
+
+  - story: 여행지 추천
+    steps:
+      - intent: recommend_destination
+      - action: utter_recommend_destination
+
+  - story: 여행 계획 세우기
+    steps:
+      - intent: plan_trip
+      - action: action_plan_trip
+
+  - story: 단일 여행 계획 요청
+    steps:
+      - intent: plan_trip
+      - action: action_plan_trip
+
+  - story: 답변 불가 fallback
+    steps:
+      - intent: fallback
+      - action: action_gemini_fallback
+
+  - story: 종료
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: 챗봇 소개
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
+
+  - story: 도시명만 입력 시 여행 계획
+    steps:
+      - intent: plan_trip
+        entities:
+          - city: 도쿄
+      - slot_was_set:
+          - city: 도쿄
+      - action: action_plan_trip
+
+  - story: 도시명만 입력 시 여행 계획2
+    steps:
+      - intent: plan_trip
+        entities:
+          - city: 교토
+      - slot_was_set:
+          - city: 교토
+      - action: action_plan_trip
+
+  - story: 도시명만 입력 시 여행 계획3
+    steps:
+      - intent: plan_trip
+        entities:
+          - city: 오사카
+      - slot_was_set:
+          - city: 오사카
+      - action: action_plan_trip

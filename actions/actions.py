@@ -1,139 +1,60 @@
-# This files contains your custom actions which can be used to run
-# custom Python code.
-#
-# See this guide on how to implement these action:
-# https://rasa.com/docs/rasa/custom-actions
-
-
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, FollowupAction, Restarted
 import requests
-import aiohttp
-import asyncio
-from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-async def fetch_data(session, url):
-    async with session.get(url) as response:
-        return await response.json()
-
-class ActionHelloWorld(Action):
+class ActionPlanTrip(Action):
     def name(self) -> Text:
-        return "action_hello_world"
+        return "action_plan_trip"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Hello World!")
-
-        return []
-
-class ActionGetRealTimeData(Action):
-    def name(self) -> Text:
-        return "action_get_realtime_data"  # 액션 고유 ID
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
-        # 1. 슬롯 값 추출
-        location = tracker.get_slot("location")
-        
-        # 2. 외부 API 호출 (예: OpenWeatherMap)
-        api_key = "YOUR_API_KEY"  # 여기에 실제 API 키를 입력하세요.
-        url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric"
-        
-        try:
-            response = requests.get(url, timeout=10)
-            if response.status_code == 200:
-                data = response.json()
-                temp = data["main"]["temp"]
-                description = data["weather"][0]["description"]
-                
-                # 3. 동적 응답 생성
-                message = f"{location}의 현재 온도는 {temp}°C, 날씨는 {description}입니다."
-                dispatcher.utter_message(text=message)
-                
-                # 4. 슬롯 업데이트 (선택적)
-                return [SlotSet("last_weather", message)]
-            else:
-                dispatcher.utter_message(text="날씨 정보를 가져오지 못했습니다.")
-        except Exception as e:
-            dispatcher.utter_message(text="서버 연결에 문제가 발생했습니다.")
-        
-        return []
-
-class ActionAskAdditionalInfo(Action):
-    def name(self):
-        return "action_ask_additional_info"
-
-    def run(self, dispatcher, tracker, domain):
-        dispatcher.utter_message(text="추가 정보를 알려주세요.")
-        return []
-
-class ActionWelcome(Action):
-    def name(self):
-        return "action_welcome"
-
-    def run(self, dispatcher, tracker, domain):
-        dispatcher.utter_message(text="환영합니다! 무엇을 도와드릴까요?")
-        return []
-
-class ActionExampleFollowup(Action):
-    def name(self):
-        return "action_example_followup"
-
-    def run(self, dispatcher, tracker, domain):
-        # FollowupAction을 이용한 연속 액션 실행
-        return [FollowupAction("action_ask_additional_info")]
-
-class ActionExampleRestart(Action):
-    def name(self):
-        return "action_example_restart"
-
-    def run(self, dispatcher, tracker, domain):
-        # Restarted()로 대화 초기화 후 액션 연결
-        return [Restarted(), FollowupAction("action_welcome")]
-
-class ActionAsyncData(Action):
-    def name(self) -> str:
-        return "action_async_data"
-
-    async def run(self, dispatcher: CollectingDispatcher, tracker, domain: Dict[str, Any]) -> List[Dict[str, Any]]:
-        async with aiohttp.ClientSession() as session:
-            try:
-                data = await fetch_data(session, "https://api.example.com/data")
-                dispatcher.utter_message(text=f"비동기 결과: {data['value']}")
-            except Exception as e:
-                dispatcher.utter_message(text="데이터를 가져오는 중 오류가 발생했습니다.")
-        return []
-
-class ActionDBQuery(Action):
-    def name(self) -> str:
-        return "action_db_query"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker, domain: Dict[str, Any]) -> List[Dict[str, Any]]:
-        # SQLite 데이터베이스 연결
-        engine = create_engine('sqlite:///travel.db')
-        city = tracker.get_slot("city")  # 슬롯에서 도시 정보 가져오기
-
+        city = tracker.get_slot("city")
         if not city:
-            dispatcher.utter_message(text="도시 정보를 입력해주세요.")
-            return []
+            text = tracker.latest_message.get("text", "")
+            for c in ["도쿄", "교토", "오사카"]:
+                if c in text:
+                    city = c
+                    break
+        if city == "도쿄":
+            dispatcher.utter_message(text="도쿄 2박3일 추천 코스: 1일차-아사쿠사, 우에노, 2일차-시부야, 신주쿠, 3일차-도쿄타워, 오다이바")
+        elif city == "교토":
+            dispatcher.utter_message(text="교토 2박3일 추천 코스: 1일차-기온, 청수사, 2일차-금각사, 은각사, 3일차-후시미이나리, 아라시야마")
+        elif city == "오사카":
+            dispatcher.utter_message(text="오사카 2박3일 추천 코스: 1일차-도톤보리, 신사이바시, 2일차-유니버설 스튜디오, 3일차-오사카성, 텐노지")
+        else:
+            dispatcher.utter_message(text="도쿄, 교토, 오사카 중 한 도시를 말씀해 주세요!")
+        return []
 
+class ActionGeminiFallback(Action):
+    def name(self) -> Text:
+        return "action_gemini_fallback"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        user_msg = tracker.latest_message.get("text", "")
+        gemini_api_key = os.getenv("GEMINI_API_KEY")
+        gemini_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + gemini_api_key
+        headers = {"Content-Type": "application/json"}
+        data = {
+            "contents": [{"parts": [{"text": user_msg}]}]
+        }
         try:
-            with engine.connect() as conn:
-                # 데이터베이스에서 명소 조회
-                result = conn.execute("SELECT name FROM attractions WHERE city=?", (city,))
-                attractions = [row[0] for row in result]
-
-                if attractions:
-                    dispatcher.utter_message(text=f"{city}의 추천 명소: {', '.join(attractions)}")
-                else:
-                    dispatcher.utter_message(text=f"{city}에 대한 추천 명소 정보를 찾을 수 없습니다.")
+            response = requests.post(gemini_url, headers=headers, json=data, timeout=10)
+            if response.status_code == 200:
+                res_json = response.json()
+                try:
+                    gemini_answer = res_json["candidates"][0]["content"]["parts"][0]["text"]
+                except Exception:
+                    gemini_answer = str(res_json)
+                dispatcher.utter_message(text=f"Gemini의 답변: {gemini_answer}")
+            else:
+                dispatcher.utter_message(text=f"Gemini API 호출에 실패했습니다. 상태코드: {response.status_code}")
         except Exception as e:
-            dispatcher.utter_message(text="데이터베이스 조회 중 오류가 발생했습니다.")
-        
+            dispatcher.utter_message(text=f"Gemini API 연결 중 오류가 발생했습니다: {e}")
         return []

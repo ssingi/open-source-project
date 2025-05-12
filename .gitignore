@@ -30,5 +30,6 @@ models/
 # 환경변수 및 보안정보 파일
 .env
 
-# 기타
-*.sqlite3
+# Rasa 캐시
+.rasa/
+

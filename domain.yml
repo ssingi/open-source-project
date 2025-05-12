@@ -2,50 +2,55 @@ version: "3.1"
 
 intents:
   - greet
-  - recommend_japan
-  - ask_weather
   - recommend_destination
+  - plan_trip
+  - goodbye
   - bot_challenge
+  - fallback
+  - mood_great
+  - mood_unhappy
+  - affirm
+  - deny
+  - ask_weather
+
+entities:
+  - city
 
 responses:
   utter_greet:
-    - text: "안녕하세요! 일본 여행지 추천 챗봇입니다. 궁금한 점을 말씀해 주세요."
-  utter_recommend_japan:
+    - text: "안녕하세요! 일본 여행 계획 챗봇입니다. 도쿄, 오사카, 교토 중 궁금한 도시를 말씀해 주세요."
+  utter_recommend_destination:
     - text: |
         일본에서 인기 있는 여행지는 다음과 같습니다:
-        1. 도쿄(도쿄타워, 아사쿠사, 시부야)
-        2. 오사카(도톤보리, 유니버설 스튜디오)
-        3. 교토(기온, 금각사, 후시미이나리)
-        4. 홋카이도(삿포로, 오타루, 후라노)
-        5. 오키나와(츄라우미 수족관, 국제거리)
-        원하는 지역이나 테마가 있으면 말씀해 주세요!
+        1. 도쿄
+        2. 교토
+        3. 오사카
+        어느 도시의 여행 계획이 궁금하신가요?
   utter_goodbye:
     - text: "안녕히 가세요! 다음에 또 만나요."
   utter_iamabot:
-    - text: "저는 챗봇이에요. 궁금한 점이 있으면 언제든 물어보세요!"
-  utter_cheer_up:
-    - text: "힘내세요! 곧 좋은 일이 생길 거예요 😊"
-  utter_did_that_help:
-    - text: "도움이 되었나요?"
+    - text: "저는 여행 계획 챗봇이에요. 도쿄, 오사카, 교토 여행 루트에 대해 궁금한 점을 말씀해 주세요!"
+  utter_fallback:
+    - text: "죄송해요, 그 질문에는 바로 답변드리기 어려워요. Gemini AI에게 물어볼게요!"
   utter_happy:
-    - text: "좋아요! 도움이 되어 기쁩니다."
+    - text: "좋아요! 여행이 즐거우셨다니 기쁩니다."
+  utter_cheer_up:
+    - text: "힘내세요! 여행은 기분 전환에 최고예요."
+  utter_did_that_help:
+    - text: "조금 도움이 되었나요?"
 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 
 actions:
+  - action_plan_trip
+  - action_gemini_fallback
   - action_get_realtime_data
-  - action_db_query
 
 slots:
-  location:
+  city:
     type: text
     mappings:
-      - type: from_text
-
-stories:
-  - story: 실시간 날씨 정보
-    steps:
-      - intent: ask_weather
-      - action: action_get_realtime_data
+      - type: from_entity
+        entity: city
