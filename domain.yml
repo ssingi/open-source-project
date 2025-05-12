@@ -1,34 +1,49 @@
+# 챗봇이 어떤 것을 인식하고 말할 수 있는지를 정의하는 중앙 설정 파일
 version: "3.1"
 
+# nlu.yml에서 정의된 의도 나열
 intents:
   - greet
   - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - ask_location
+  - request_recommendation
 
+# nlu.yml에서 추출할 엔티티 나열
+entities:
+  - location
+  - preference
+
+# request_recommendation에서 대화 중 저장해야할 정보
+slots:
+  location:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: location
+
+  preference:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: preference
+
+# 챗봇이 사용자에게 보낼 메시지
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
+    - text: "안녕하세요! 일본 여행 계획 도와드리는 AI 챗봇이에요. 어떤 지역에서 어떤 활동을 하고 싶으신가요?"
 
   utter_goodbye:
-  - text: "Bye"
+    - text: "즐거운 여행 되세요!"
 
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+  utter_ask_location:
+    - text: "어느 지역으로 여행을 가고 싶으세요?"
 
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  utter_ask_preference:
+    - text: "어떤 종류의 활동을 원하시나요? (예: 문화 체험, 맛집, 자연 등)"
+
+actions:
+  - action_recommend_place
+  - action_gemini_fallback
+

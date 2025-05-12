@@ -1,30 +1,39 @@
+# 실제 대화 흐름(시나리오)을 예시로 보여주는 데이터 (ML 모델이 학습함)
 version: "3.1"
 
 stories:
 
-- story: happy path
+- story: 기본 인사
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+    - intent: greet
+    - action: utter_greet
 
-- story: sad path 1
+- story: 기본 작별 인사
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
+    - intent: goodbye
+    - action: utter_goodbye
 
-- story: sad path 2
+- story: 여행지 추천 기본 흐름
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+    - intent: greet
+    - action: utter_greet
+    - intent: request_recommendation
+      entities:
+        - location: "오사카"
+        - preference: "문화체험"
+    - action: action_recommend_place
+
+- story: 여행지 추천 후 대화 종료
+  steps:
+    - intent: ask_location
+    - action: utter_ask_preference
+    - intent: request_recommendation
+      entities:
+        - location: "도쿄"
+        - preference: "맛집"
+    - action: action_recommend_place
+
+- story: 여행지 질문
+  steps:
+    - intent: ask_location
+    - action: utter_ask_location

@@ -1,13 +1,14 @@
+# intent로 의도 분류 후 action으로 응답
+# intent: greet, goodbye, request_recommendation
 version: "3.1"
 
 rules:
-
-- rule: Say goodbye anytime the user says goodbye
+- rule: 사용자 요청에 따라 여행지 추천
   steps:
-  - intent: goodbye
-  - action: utter_goodbye
+  - intent: request_recommendation
+  - action: action_recommend_place
 
-- rule: Say 'I am a bot' anytime the user challenges
+- rule: 인식 실패 시 Gemini에게 넘기기
   steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+    - intent: nlu_fallback
+    - action: action_gemini_fallback

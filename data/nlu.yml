@@ -1,91 +1,34 @@
+# 사용자 입력이 어떤 intent이고, 어떤 entity가 포함되었는지 학습시키는 데이터
 version: "3.1"
 
+# greet, goodbye, ask_location, request_recommendation
 nlu:
 - intent: greet
   examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+    - 안녕
+    - 하이
+    - 여행 추천해줘
+    - 일본 여행 도와줘
 
 - intent: goodbye
   examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+    - 잘가
+    - 안녕히 계세요
+    - 그만할게
 
-- intent: affirm
+- intent: ask_location
   examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+    - [오사카](location) 가고 싶어
+    - [도쿄](location) 여행할래
+    - [교토](location) 가고 싶어
+    - [후쿠오카](location) 가고 싶어
+    - [홋카이도](location) 가고 싶어 
 
-- intent: deny
-  examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
 
-- intent: mood_great
+- intent: request_recommendation
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - [오사카](location)에서 [문화체험](preference) 하고 싶어
+    - [도쿄](location)에서 [맛집](preference) 탐방할래
+    - [교토](location)에서 [자연](preference) 즐기고 싶어
+    - [후쿠오카](location)에서 [역사](preference)를 느끼고 싶어
+    - [홋카이도](location) [스키](preference) 타러 가고 싶어
