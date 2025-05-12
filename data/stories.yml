@@ -1,0 +1,38 @@
+version: "3.1"
+
+stories:
+- story: greet and recommend destination
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: recommend_destination
+    - action: utter_recommend_destination
+
+- story: greet and seasonal recommendation
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: seasonal_recommendation
+    - action: utter_seasonal_recommendation
+
+- story: destination recommendation only
+  steps:
+    - intent: recommend_destination
+    - action: utter_recommend_destination
+
+- story: seasonal recommendation only
+  steps:
+    - intent: seasonal_recommendation
+    - action: utter_seasonal_recommendation
+
+- story: goodbye scenario
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye
+
+- story: greet and then seasonal recommendation
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: seasonal_recommendation
+    - action: utter_seasonal_recommendation

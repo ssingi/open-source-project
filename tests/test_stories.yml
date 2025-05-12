@@ -1,0 +1,27 @@
+stories:
+- story: 기분 좋은 대화
+  steps:
+  - intent: 인사하기
+  - action: utter_인사하기
+  - intent: 기분좋음
+  - action: utter_기분좋음
+
+- story: 기분 나쁠 때 위로
+  steps:
+  - intent: 인사하기
+  - action: utter_인사하기
+  - intent: 기분나쁨
+  - action: utter_기분나쁨
+  - action: utter_did_that_help
+  - intent: 긍정하기
+  - action: utter_긍정하기
+
+- story: 봇 여부 확인
+  steps:
+  - intent: 봇확인
+  - action: utter_봇확확인
+
+- story: 작별
+  steps:
+  - intent: 작별인사
+  - action: utter_작별인사
