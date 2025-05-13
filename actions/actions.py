@@ -1,6 +1,7 @@
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
+from typing import Text, Dict, Any, List  
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
@@ -40,26 +41,29 @@ def extract_places(text: str) -> list:
             results.append((place, desc))
     return results
 
-class ActionRecommendPlace(Action):
-    def name(self) -> str:
-        return "action_recommend_place"
+
+class ActionGeminiFallback(Action):
+    def name(self) -> Text:
+        return "action_gemini_fallback"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
-            domain: DomainDict):
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+        # 슬롯에서 location과 preference 가져오기
         location = tracker.get_slot("location") or "일본"
         preference = tracker.get_slot("preference") or "관광"
 
+        # ActionRecommendPlace의 프롬프트를 기반으로 생성
         prompt = f"""
         당신은 일본 여행 전문가입니다.
         사용자가 일본 {location}에서 {preference}를 즐기고 싶어 해요.
 
         ✅ 아래 기준을 엄격히 지켜서 추천해 주세요:
-        1. **'{location}' 내에서만** 추천 (예: '도쿄' 요청 시 도쿄 외 지역은 절대 포함 금지)
+        1. **'{location}' 내에서만** 추천 (예: '{location}' 요청 시 '{location}' 외 지역은 절대 포함 금지)
         2. 추천 장소는 3~5곳, 장소 이름과 간단한 설명
         3. 불필요한 지역 설명, 서론, 여행코스 추천은 생략
-        4. **'{location}'이라는 지역명을 명시한 장소만 포함**
+        4. **'{location}'이라는 지역명을 명시한 장소만 포함** (예: '{location} 성', '{location} 도톤보리' 등)
 
         아래 형식으로 답변해 주세요:
 
@@ -68,8 +72,8 @@ class ActionRecommendPlace(Action):
         ...
         """
 
-
         try:
+            # Gemini 모델을 사용하여 응답 생성
             response = model.generate_content(prompt)
             cleaned_text = remove_redundant_lines(response.text)
             places = extract_places(cleaned_text)
@@ -89,32 +93,30 @@ class ActionRecommendPlace(Action):
             print("Gemini 오류:", e)
 
         return []
+    
+# action_plan_city
+class ActionPlanCity(Action):
+    def name(self) -> Text:
+        return "action_plan_city"
 
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-# This files contains your custom actions which can be used to run
-# custom Python code.
-#
-# See this guide on how to implement these action:
-# https://rasa.com/docs/rasa/custom-actions
+        city = next(tracker.get_latest_entity_values("city"), None)
 
+        if not city:
+            dispatcher.utter_message(text="어느 도시의 일정이 궁금하신가요?")
+            return []
 
-# This is a simple example for a custom action which utters "Hello World!"
+        city = city.strip().lower()
 
-# from typing import Any, Text, Dict, List
-#
-# from rasa_sdk import Action, Tracker
-# from rasa_sdk.executor import CollectingDispatcher
-#
-#
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []
+        itineraries = {
+            "도쿄": "도쿄 일정: 시부야, 아사쿠사, 긴자 쇼핑 등 3일 코스 추천!",
+            "오사카": "오사카 일정: 도톤보리, 오사카성, 유니버설 스튜디오 등 추천!",
+            "교토": "교토 일정: 아라시야마, 기온 거리, 후시미 이나리 신사 추천!"
+        }
+
+        response = itineraries.get(city, f"{city}에 대한 여행 정보가 아직 준비되지 않았어요.")
+        dispatcher.utter_message(text=response)
+        return []

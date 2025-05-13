@@ -23,17 +23,17 @@ stories:
         - preference: "문화체험"
     - action: action_recommend_place
 
-- story: 여행지 추천 후 대화 종료
-  steps:
-    - intent: ask_location
-    - action: utter_ask_preference
-    - intent: request_recommendation
-      entities:
-        - location: "도쿄"
-        - preference: "맛집"
-    - action: action_recommend_place
+# - story: 여행지 추천 후 대화 종료
+#   steps:
+#     - intent: ask_location
+#     - action: utter_ask_preference
+#     - intent: request_recommendation
+#       entities:
+#         - location: "도쿄"
+#         - preference: "맛집"
+#     - action: action_recommend_place
 
-- story: 여행지 질문
-  steps:
-    - intent: ask_location
-    - action: utter_ask_location
+# - story: 여행지 질문
+#   steps:
+#     - intent: ask_location
+#     - action: utter_ask_location
