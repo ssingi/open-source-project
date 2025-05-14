@@ -1,5 +1,5 @@
 # 사용자 입력이 어떤 intent이고, 어떤 entity가 포함되었는지 학습시키는 데이터
-# 기본적인 intent: greet, goodbye, bot_introduction, request_recommendation, plan_city
+# 기본적인 intent: greet, goodbye, bot_introduction, request_recommendation
 
 version: "3.1"
 
@@ -12,48 +12,39 @@ nlu:
 
 - intent: goodbye
   examples: |
-    - 잘 가
-    - 안녕히 계세요
-
-- intent: bot_introduction
-  examples: |
-    - 너는 누구야?
-    - 너 뭐하는 챗봇이야?
-    - 자기소개 해봐
-    - 무슨 기능이 있어?
-
-- intent: request_recommendation
-  examples: |
-    - 여행지 추천해줘
-    - 도쿄, 오사카, 교토 중 어디가 좋아?
-    - 일본에서 어디 가는 게 좋을까?
-    - 지역별 특징 알려줘
-#     - [오사카](location)에서 [문화체험](preference) 하고 싶어
-#     - [도쿄](location)에서 [맛집](preference) 탐방할래
-#     - [교토](location)에서 [자연](preference) 즐기고 싶어
-#     - [후쿠오카](location)에서 [역사](preference)를 느끼고 싶어
-#     - [홋카이도](location) [스키](preference) 타러 가고 싶어
-
+    - 잘가
+    - 다음에 또 올게
+    - 또 봐
+    - 다음에 봐
+   
 - intent: plan_city
   examples: |
-    - [도쿄](city) 여행 계획 추천
-    - [도쿄](city)에서 뭐할까?
+    - 여행지 추천해줘
+    - 일본에서 어디 가는 게 좋을까?
+    - 일본의 다른 지역 추천해줘
+    - 지역별 특징 알려줘
+    - [도쿄](city)에서 가볼 만한 곳 추천해줘
+    - [도쿄](city)에서 맛집 추천해줘
+    - [도쿄](city)에서 뭐하면 좋아?
     - [도쿄](city) 일정 알려줘
     - [도쿄](city) 3일 코스 알려줘
-    - [오사카](city) 일정 짜줘
-    - [오사카](city)에 문화체험 하고 싶어
-    - [교토](city)에 대해 알려줘
-    - [교토](city) 일정 궁금해
+    - [도쿄](city) 여행 계획 추천
     - [도쿄](city) 여행 계획 추천해줘
     - [도쿄](city) 3일 일정 짜줘
-    - [도쿄](city)에서 뭐하면 좋아?
-    - [도쿄](city) 관광지 추천해줘
     - [도쿄](city) 어디가 유명해?
+    - [오사카](city)에서 유명한 장소 알려줘
+    - [오사카](city)에서 문화 체험할 곳 추천해줘
+    - [오사카](city)에서 볼거리 뭐 있어?
+    - [오사카](city) 일정 짜줘
+    - [오사카](city) 일정 좀 짜줘
+    - [오사카](city)에 문화체험 하고 싶어
+    - [오사카](city) 어디 갈까?
     - [오사카](city) 여행 계획 추천
     - [오사카](city) 2박 3일 코스 알려줘
-    - [오사카](city)에서 볼거리 뭐 있어?
-    - [오사카](city) 일정 좀 짜줘
-    - [오사카](city) 어디 갈까?
+    - [교토](city)에서 관광지 추천해줘
+    - [교토](city)에서 자연을 즐길 수 있는 곳 추천해줘
+    - [교토](city)에 대해 알려줘
+    - [교토](city) 일정 궁금해
     - [교토](city) 여행지 추천해줘
     - [교토](city) 일정 부탁해
     - [교토](city) 1일 코스 짜줘
@@ -61,20 +52,12 @@ nlu:
     - [교토](city) 어디가 제일 유명해?
 
 
-
-- intent: nlu_fallback
+- intent: fallback
   examples: |
-    - ㅇㅇ
-    - 아무말이나 입력해보자
-    - 뜻 모를 문장 예시
-    - 이건 이해 못할거야
-# - intent: ask_location
-#   examples: |
-#     - [오사카](location) 가고 싶어
-#     - [도쿄](location) 여행할래
-#     - [교토](location) 가고 싶어
-#     - [후쿠오카](location) 가고 싶어
-#     - [홋카이도](location) 가고 싶어 
+    - 아무거나 추천해줘
+    - [이해할 수 없는 질문 예시]
+    - [모호한 질문 예시]
+    - [명확하지 않은 질문 예시]
 
 - lookup: city
   examples: |

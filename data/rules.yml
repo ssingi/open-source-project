@@ -1,5 +1,5 @@
 # intent로 의도 분류 후 action으로 응답
-# intent: greet, goodbye, bot_introduction, request_recommendation, plan_city
+# intent: greet, goodbye, bot_introduction, plan_city, fallback
 version: "3.1"
 
 rules:
@@ -16,31 +16,24 @@ rules:
     - intent: goodbye
     - action: utter_goodbye
 
-# 3. 챗봇 소개 응답
-- rule: 챗봇 소개
-  steps:
-    - intent: bot_introduction
-    - action: utter_bot_introduction
-
-# 4. 사용자 요청에 따라 여행지 추천 (도쿄, 오사카, 교토의 특징징)
+# 3. 특정 도시 여행 계획 안내 (도쿄 -> 도쿄, 오사카 -> 오사카, 교토 -> 교토)
 - rule: 사용자 요청에 따라 여행지 추천
   steps:
-  - intent: request_recommendation
-  - action: action_recommend_place
+    - intent: plan_city
+    - slot_was_set:
+        - city: filled
+    - action: action_recommend_city
 
-# 5. 특정 도시 여행 계획 안내 (도쿄 -> 도쿄, 오사카 -> 오사카, 교토 -> 교토토)
-- rule: 특정 도시 여행 계획
+# 4. Lookup에 없는 도시 처리
+- rule: Lookup에 없는 도시 처리
   steps:
     - intent: plan_city
-    - action: action_plan_city
-
-# 6. NLU fallback 처리 (Gemini로 넘김)
-- rule: NLU Fallback 처리
-  steps:
-    - intent: nlu_fallback
+    - slot_was_set:
+        - city: null
     - action: action_gemini_fallback
 
-# 7. Default fallback 처리 (NLU와 Core 모두 실패했을 때)
-- rule: Default Fallback 처리
+# 5. fallback 처리 (Gemini로 넘김)
+- rule: Gemini로 Fallback
   steps:
-    - action: action_default_fallback
+    - intent: fallback
+    - action: action_gemini_fallback

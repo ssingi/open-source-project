@@ -2,38 +2,13 @@
 version: "3.1"
 
 stories:
-
-- story: 기본 인사
-  steps:
-    - intent: greet
-    - action: utter_greet
-
-- story: 기본 작별 인사
-  steps:
-    - intent: goodbye
-    - action: utter_goodbye
-
-- story: 여행지 추천 기본 흐름
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: request_recommendation
-      entities:
-        - location: "오사카"
-        - preference: "문화체험"
-    - action: action_recommend_place
-
-# - story: 여행지 추천 후 대화 종료
+# - story: 유동적인 여행 일정 생성 흐름
 #   steps:
-#     - intent: ask_location
-#     - action: utter_ask_preference
-#     - intent: request_recommendation
-#       entities:
-#         - location: "도쿄"
-#         - preference: "맛집"
-#     - action: action_recommend_place
-
-# - story: 여행지 질문
-#   steps:
-#     - intent: ask_location
-#     - action: utter_ask_location
+#     - intent: choose_city
+#     - action: utter_ask_days
+#     - intent: provide_days
+#     - action: utter_ask_people
+#     - intent: provide_people
+#     - action: utter_ask_itinerary_request
+#     - intent: request_itinerary
+#     - action: action_generate_itinerary

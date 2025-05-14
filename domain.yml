@@ -5,33 +5,15 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - bot_introduction
-  - request_recommendation
   - plan_city
-  - nlu_fallback
+  - fallback
 
 # nlu.yml에서 추출할 엔티티 나열
 entities:
-  - location
-  - preference
   - city
 
 # request_recommendation에서 대화 중 저장해야할 정보
 slots:
-  location:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: location
-
-  preference:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: preference
-  
   city:
     type: text
     influence_conversation: true
@@ -40,29 +22,22 @@ slots:
         entity: city
 
 # 챗봇이 사용자에게 보낼 메시지
-
 responses:
   utter_greet:
     - text: |
-        안녕하세요! 일본 여행 계획 도와드리는 AI 챗봇이에요. 어떤 지역에서 어떤 활동을 하고 싶으신가요? 😊
+        안녕하세요! 일본 여행 계획 도와드리는 AI 챗봇이에요. 어떤 지역에 관심이 있으신가요 ?
+        '특정 지역' 일정 만들어줘 식으로 말씀드리면 만들어 줄 수 있어요. 😊
 
   utter_goodbye:
      - text: |
         즐거운 여행 되세요! 다음에 또 만나요 👋
 
-  utter_bot_introduction:
-    - text: |
-        저는 여러분의 여행을 도와주는 AI 챗봇이에요! 
-        여행지 추천, 일정 계획 등 궁금한 게 있으면 언제든 물어보세요.
-#   utter_ask_location:
-#     - text: "어느 지역으로 여행을 가고 싶으세요?"
-# 
-#   utter_ask_preference:
-#     - text: "어떤 종류의 활동을 원하시나요? (예: 문화 체험, 맛집, 자연 등)"
-
 actions:
-  - action_recommend_place
-  - action_plan_city
   - action_gemini_fallback
-  - action_default_fallback
+  - action_recommend_city
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
 
