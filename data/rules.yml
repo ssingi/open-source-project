@@ -1,5 +1,5 @@
 # intent로 의도 분류 후 action으로 응답
-# intent: greet, goodbye, bot_introduction, plan_city, fallback
+# intent: greet, recommend_city, plan_city, fallback, goodbye
 version: "3.1"
 
 rules:
@@ -10,30 +10,36 @@ rules:
     - intent: greet
     - action: utter_greet
 
-# 2. 종료 처리
-- rule: 종료 인사
+# 2. 여행지 추천 처리
+- rule: 여행지 추천
   steps:
-    - intent: goodbye
-    - action: utter_goodbye
+    - intent: recommend_city
+    - action: utter_recommend_city
 
 # 3. 특정 도시 여행 계획 안내 (도쿄 -> 도쿄, 오사카 -> 오사카, 교토 -> 교토)
-- rule: 사용자 요청에 따라 여행지 추천
+- rule: 특정 도시 여행 계획 안내
   steps:
     - intent: plan_city
     - slot_was_set:
         - city: filled
     - action: action_recommend_city
 
-# 4. Lookup에 없는 도시 처리
-- rule: Lookup에 없는 도시 처리
+# 4. 도시 정보가 없는 경우 처리
+- rule: 도시 정보가 없는 경우 처리
   steps:
     - intent: plan_city
     - slot_was_set:
         - city: null
-    - action: action_gemini_fallback
+    - action: action_recommend_city
 
 # 5. fallback 처리 (Gemini로 넘김)
 - rule: Gemini로 Fallback
   steps:
     - intent: fallback
     - action: action_gemini_fallback
+
+# 6. 종료 처리
+- rule: 종료 인사
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye    

@@ -4,19 +4,20 @@ version: "3.1"
 # nlu.yml에서 정의된 의도 나열
 intents:
   - greet
-  - goodbye
+  - recommend_city
   - plan_city
   - fallback
+  - goodbye
 
-# nlu.yml에서 추출할 엔티티 나열
+# nlu.yml에서 추출할 엔티티
 entities:
   - city
 
-# request_recommendation에서 대화 중 저장해야할 정보
+# plan_city의 대화에서 저장해야할 정보
 slots:
   city:
     type: text
-    influence_conversation: true
+    influence_conversation: true # true로 설정하면 대화 흐름에 영향을 미침 false로 설정하면 대화 흐름에 영향을 미치지 않음
     mappings:
       - type: from_entity
         entity: city
@@ -26,18 +27,25 @@ responses:
   utter_greet:
     - text: |
         안녕하세요! 일본 여행 계획 도와드리는 AI 챗봇이에요. 어떤 지역에 관심이 있으신가요 ?
-        '특정 지역' 일정 만들어줘 식으로 말씀드리면 만들어 줄 수 있어요. 😊
+        예를들어 '도쿄 일정 만들어줘'와 같이 특정 지역 일정 만들어줘 라고 말씀드리면 만들어 줄 수 있어요. 😊
+        아직 지역을 못정하셧다면 '일본 여행지 추천해줘'라고 말씀해주시면 추천해드릴게요!
+
+  utter_recommend_city:
+    - text: |
+        일본의 다양한 도시를 추천해드릴게요! 어떤 도시를 원하시나요?
+        현재 저희가 추천해 줄 수 있는 도시는 '도쿄', '오사카', '교토'입니다.
+        그외의 지역들에 대해서는 Gemini로 넘겨드릴게요!
+        예를들어 '도쿄 일정 만들어줘' 또는 '오사카의 일정 알려줘'와 같이 말씀해주시면 해당 도시의 여행 계획을 도와드릴게요. :)
 
   utter_goodbye:
      - text: |
-        즐거운 여행 되세요! 다음에 또 만나요 👋
+        도움이되었기를 바래요. 즐거운 여행 되세요! 다음에 또 만나요! 👋
 
 actions:
-  - action_gemini_fallback
   - action_recommend_city
+  - action_gemini_fallback
 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
-
 

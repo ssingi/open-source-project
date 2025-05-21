@@ -2,6 +2,7 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
+from rasa_sdk.events import FollowupAction
 import os
 import requests
 
@@ -16,21 +17,24 @@ class ActionPlanCity(Action):
 
         city = next(tracker.get_latest_entity_values("city"), None)
 
-        if not city:
-            dispatcher.utter_message(text="어느 도시의 일정이 궁금하신가요?") # text 바꾸기
-            return []
-
-        city = city.strip().lower()
-
-        itineraries = {
+        supported_cities = {
             "도쿄": "도쿄 2박3일 추천 코스: 1일차-아사쿠사, 우에노, 2일차-시부야, 신주쿠, 3일차-도쿄타워, 오다이바",
-            "오사카": "교토 2박3일 추천 코스: 1일차-기온, 청수사, 2일차-금각사, 은각사, 3일차-후시미이나리, 아라시야마",
-            "교토": "오사카 2박3일 추천 코스: 1일차-도톤보리, 신사이바시, 2일차-유니버설 스튜디오, 3일차-오사카성, 텐노지"
+            "오사카": "오사카 2박3일 추천 코스: 1일차-도톤보리, 신사이바시, 2일차-유니버설 스튜디오, 3일차-오사카성, 텐노지",
+            "교토": "교토 2박3일 추천 코스: 1일차-기온, 청수사, 2일차-금각사, 은각사, 3일차-후시미이나리, 아라시야마"
         }
 
-        response = itineraries.get(city, f"{city}에 대한 여행 정보가 아직 준비되지 않았어요.")
-        dispatcher.utter_message(text=response)
-        return []
+        if not city:
+            dispatcher.utter_message(text="도시 정보가 없습니다. 죄송해요, 그 질문에는 바로 답변드리기 어려워요. Gemini AI에게 물어볼게요!")
+            return [FollowupAction("action_gemini_fallback")]
+
+        city = city.strip()
+
+        if city in supported_cities:
+            dispatcher.utter_message(text=supported_cities[city])
+            return []
+        else:
+            # 지원하지 않는 도시는 fallback으로 넘김
+            return [FollowupAction("action_gemini_fallback")]
 
 # ✅ Gemini를 통한 장소 추천 Action
 class ActionGeminiFallback(Action):
@@ -40,6 +44,7 @@ class ActionGeminiFallback(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
         user_msg = tracker.latest_message.get("text", "")
         gemini_api_key = os.getenv("GEMINI_API_KEY")
         gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_api_key}"
@@ -58,7 +63,7 @@ class ActionGeminiFallback(Action):
         }
 
         try:
-            response = requests.post(gemini_url, headers=headers, json=data, timeout=30)  # timeout을 30초로 증가
+            response = requests.post(gemini_url, headers=headers, json=data, timeout=30)
             if response.status_code == 200:
                 res_json = response.json()
                 gemini_answer = res_json.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "답변을 생성할 수 없습니다.")
