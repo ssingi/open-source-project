@@ -1,36 +1,49 @@
 version: "3.1"
 
-recipe: default.v1
-assistant_id: 20250509-001644-burgundy-martin
+recipe: default.v1 # Rasa의 기본 레시피 사용
+assistant_id: 20250509-001644-burgundy-martin # Rasa Assistant 고유 ID
 
-language: ko
+language: ko # 챗봇의 기본 언어(한국어)
 
 pipeline:
+  # 입력 문장을 토큰(단어 등)으로 분리
   - name: WhitespaceTokenizer
+  # 정규표현식 기반 피처 생성(엔티티 추출 등)
   - name: RegexFeaturizer
+  # 형태소, 구문 등 다양한 피처 생성
   - name: LexicalSyntacticFeaturizer
+  # 문자 n-gram 기반 피처 생성(한국어에 효과적)
   - name: CountVectorsFeaturizer
     analyzer: "char_wb"
     min_ngram: 1
     max_ngram: 4
+  # 정규표현식 기반 엔티티 추출
   - name: RegexEntityExtractor
+  # 인텐트 분류 및 엔티티 추출(딥러닝 기반)
   - name: DIETClassifier
     epochs: 100
     entity_recognition: True
+  # 엔티티 동의어 매핑
   - name: EntitySynonymMapper
+  # FAQ 등 응답 선택(질문-답변 매칭)
   - name: ResponseSelector
     epochs: 100
+  # 인텐트 분류 실패 시 fallback 처리
   - name: FallbackClassifier
-    threshold: 0.5
-    ambiguity_threshold: 0.1
-    fallback_intent_name: "fallback"
+    threshold: 0.5 # 신뢰도 임계값
+    ambiguity_threshold: 0.1 # 모호성 임계값
+    fallback_intent_name: "fallback" # fallback 인텐트 이름
 
 policies:
+  # 규칙 기반 정책(규칙/rules.yml 적용)
   - name: RulePolicy
+  # 과거 대화 기억 정책(스토리 기반)
   - name: MemoizationPolicy
+  # 예기치 않은 인텐트 방지 정책
   - name: UnexpecTEDIntentPolicy
     max_history: 5
     epochs: 100
+  # 대화 흐름 예측(딥러닝 기반)
   - name: TEDPolicy
     max_history: 5
     epochs: 100
