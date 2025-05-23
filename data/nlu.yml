@@ -1,5 +1,5 @@
 # 사용자 입력이 어떤 intent이고, 어떤 entity가 포함되었는지 학습시키는 데이터
-# intent: greet, recommend_city, plan_city, fallback, goodbye
+# 기본적인 intent: greet, goodbye, bot_introduction, request_recommendation
 
 version: "3.1"
 
@@ -10,15 +10,18 @@ nlu:
     - 하이
     - 반가워
 
-- intent: recommend_city
+- intent: goodbye
   examples: |
-    - 일본 여행지 추천해줘
-    - 일본 여행지 알려줘
-    - 일본 여행지 추천해줄래?
-    - 일본 여행지 추천해줄 수 있어?
+    - 잘가
+    - 다음에 또 올게
+    - 또 봐
+    - 다음에 봐
 
 - intent: plan_city
   examples: |
+    - 여행지 추천해줘
+    - 일본에서 어디 가는 게 좋을까?
+    - 일본의 다른 지역 추천해줘
     - 지역별 특징 알려줘
     - [도쿄](city) 일정 알려줘
     - [도쿄](city) 여행 코스 추천해줘
@@ -49,13 +52,6 @@ nlu:
     - [유후인](city) 일정 짜줄 수 있어?
     - [구마모토](city) 여행 일정 알려줘
 
-- lookup: city
-  examples: data/lookup/city.txt
-
-- regex: city
-  examples: |
-    - 도쿄|오사카|교토|후쿠오카|아키하바라|삿포로|나고야|고베|요코하마|센다이|히로시마|니가타|시즈오카|가나자와|나라|하코네|가마쿠라|다카야마|오타루|나가사키|유후인|구마모토
-
 - intent: fallback
   examples: |
     - 아무거나 추천해줘
@@ -63,9 +59,27 @@ nlu:
     - 뭐가 좋을지 모르겠어
     - 뭘 말해야 할지 모르겠네
 
-- intent: goodbye
-  examples: |
-    - 잘가
-    - 다음에 또 올게
-    - 또 봐
-    - 다음에 봐
+- lookup: city
+  examples: | 
+    - 도쿄
+    - 오사카
+    - 교토
+    - 후쿠오카
+    - 아키하바라
+    - 삿포로
+    - 나고야
+    - 고베
+    - 요코하마
+    - 센다이
+    - 히로시마
+    - 니가타
+    - 시즈오카
+    - 가나자와
+    - 나라
+    - 하코네
+    - 가마쿠라
+    - 다카야마
+    - 오타루
+    - 나가사키
+    - 유후인
+    - 구마모토
