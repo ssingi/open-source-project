@@ -38,7 +38,7 @@ responses:
         예를들어 '도쿄 일정 만들어줘' 또는 '오사카의 일정 알려줘'와 같이 말씀해주시면 해당 도시의 여행 계획을 도와드릴게요. :)
 
   utter_goodbye:
-     - text: |
+    - text: |
         도움이되었기를 바래요. 즐거운 여행 되세요! 다음에 또 만나요! 👋
 
 actions:
@@ -48,19 +48,3 @@ actions:
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
-
-actions:
-  - action_get_realtime_data
-  - action_db_query
-
-slots:
-  location:
-    type: text
-    mappings:
-      - type: from_text
-
-stories:
-  - story: 실시간 날씨 정보
-    steps:
-      - intent: ask_weather
-      - action: action_get_realtime_data
