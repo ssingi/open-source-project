@@ -3,43 +3,42 @@
 version: "3.1"
 
 rules:
+  # 1. 인사 처리
+  - rule: 인사에 응답
+    steps:
+      - intent: greet
+      - action: utter_greet
 
-# 1. 인사 처리
-- rule: 인사에 응답
-  steps:
-    - intent: greet
-    - action: utter_greet
+  # 2. 여행지 추천 처리
+  - rule: 여행지 추천
+    steps:
+      - intent: recommend_city
+      - action: utter_recommend_city
 
-# 2. 여행지 추천 처리
-- rule: 여행지 추천
-  steps:
-    - intent: recommend_city
-    - action: utter_recommend_city
+  # 3. 특정 도시 여행 계획 안내 (도쿄 -> 도쿄, 오사카 -> 오사카, 교토 -> 교토)
+  - rule: 특정 도시 여행 계획 안내
+    steps:
+      - intent: plan_city
+      - slot_was_set:
+          - city: filled
+      - action: action_recommend_city
 
-# 3. 특정 도시 여행 계획 안내 (도쿄 -> 도쿄, 오사카 -> 오사카, 교토 -> 교토)
-- rule: 특정 도시 여행 계획 안내
-  steps:
-    - intent: plan_city
-    - slot_was_set:
-        - city: filled
-    - action: action_recommend_city
+  # 4. 도시 정보가 없는 경우 처리
+  - rule: 도시 정보가 없는 경우 처리
+    steps:
+      - intent: plan_city
+      - slot_was_set:
+          - city: null
+      - action: action_recommend_city
 
-# 4. 도시 정보가 없는 경우 처리
-- rule: 도시 정보가 없는 경우 처리
-  steps:
-    - intent: plan_city
-    - slot_was_set:
-        - city: null
-    - action: action_recommend_city
+  # 5. fallback 처리 (Gemini로 넘김)
+  - rule: Gemini로 Fallback
+    steps:
+      - intent: fallback
+      - action: action_gemini_fallback
 
-# 5. fallback 처리 (Gemini로 넘김)
-- rule: Gemini로 Fallback
-  steps:
-    - intent: fallback
-    - action: action_gemini_fallback
-
-# 6. 종료 처리
-- rule: 종료 인사
-  steps:
-    - intent: goodbye
-    - action: utter_goodbye    
+  # 6. 종료 처리
+  - rule: 종료 인사
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye

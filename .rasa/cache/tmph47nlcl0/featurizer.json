@@ -1,0 +1,63 @@
+{
+  "type": "MaxHistoryTrackerFeaturizer",
+  "state_featurizer": {
+    "action_texts": [],
+    "entity_tag_specs": [],
+    "feature_states": {
+      "intent": {
+        "affirm": 0,
+        "ask_weather": 1,
+        "back": 2,
+        "bot_challenge": 3,
+        "deny": 4,
+        "goodbye": 5,
+        "greet": 6,
+        "mood_great": 7,
+        "mood_unhappy": 8,
+        "nlu_fallback": 9,
+        "out_of_scope": 10,
+        "recommend_destination": 11,
+        "recommend_japan": 12,
+        "restart": 13,
+        "session_start": 14
+      },
+      "action_name": {
+        "action_listen": 0,
+        "action_restart": 1,
+        "action_session_start": 2,
+        "action_default_fallback": 3,
+        "action_deactivate_loop": 4,
+        "action_revert_fallback_events": 5,
+        "action_default_ask_affirmation": 6,
+        "action_default_ask_rephrase": 7,
+        "action_two_stage_fallback": 8,
+        "action_unlikely_intent": 9,
+        "action_back": 10,
+        "...": 11,
+        "action_extract_slots": 12,
+        "action_get_realtime_data": 13,
+        "action_ask_additional_info": 14,
+        "action_welcome": 15,
+        "action_example_followup": 16,
+        "action_example_restart": 17,
+        "action_async_data": 18,
+        "action_db_query": 19,
+        "utter_cheer_up": 20,
+        "utter_did_that_help": 21,
+        "utter_goodbye": 22,
+        "utter_greet": 23,
+        "utter_happy": 24,
+        "utter_iamabot": 25,
+        "utter_recommend_japan": 26
+      },
+      "entities": {},
+      "slots": {
+        "location_0": 0,
+        "last_weather_0": 1
+      },
+      "active_loop": {}
+    }
+  },
+  "remove_duplicates": true,
+  "max_history": 5
+}
