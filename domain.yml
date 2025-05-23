@@ -1,49 +1,47 @@
 version: "3.1"
 
 intents:
-  - goodbye
-  - recommend_destination
-  - seasonal_recommendation
   - greet
+  - recommend_city
+  - plan_city
+  - fallback
+  - goodbye
+
+entities:
+  - city
+
+slots:
+  city:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: city
 
 responses:
   utter_greet:
-    - text: "안녕하세요! 일본 여행에 대해 궁금하신 게 있으신가요? 도시, 계절, 음식, 교통 등 무엇이든 물어보세요!"
-
-  utter_recommend_destination:
     - text: |
-        일본에서 인기 있는 여행지 몇 군데 추천드릴게요:
-        - 도쿄: 현대적인 도시 풍경과 쇼핑, 디즈니랜드
-        - 교토: 전통 문화와 사찰, 기온 거리
-        - 오사카: 맛있는 음식과 유니버설 스튜디오
-        - 후쿠오카: 온천과 바닷가 도시의 매력
-        어떤 스타일의 여행을 원하시나요? (예: 전통문화, 자연, 테마파크, 맛집 등)
+        안녕하세요! 일본 여행 계획 도와드리는 AI 챗봇이에요. 어떤 지역에 관심이 있으신가요 ?
+        예를들어 '도쿄 일정 만들어줘'와 같이 특정 지역 일정 만들어줘 라고 말씀드리면 만들어 줄 수 있어요. 😊
+        아직 지역을 못정하셧다면 '일본 여행지 추천해줘'라고 말씀해주시면 추천해드릴게요!
 
-  utter_seasonal_recommendation:
+  utter_recommend_city:
     - text: |
-        계절에 따라 색다른 매력을 가진 일본! 아래 지역을 참고해보세요:
-        🌸 봄 (3~5월): 
-          - 교토, 나라: 벚꽃 명소와 고즈넉한 풍경
-          - 도쿄 우에노공원: 벚꽃놀이
-        ☀️ 여름 (6~8월): 
-          - 홋카이도: 시원한 날씨와 후라노 라벤더 밭
-          - 오키나와: 투명한 바다와 해양 액티비티
-        🍁 가을 (9~11월): 
-          - 니코, 아라시야마: 화려한 단풍 절경
-          - 다카야마: 전통 거리와 가을 축제
-        ❄️ 겨울 (12~2월): 
-          - 삿포로: 눈 축제와 스키 리조트
-          - 하코다테: 야경과 온천
+        일본의 다양한 도시를 추천해드릴게요! 어떤 도시를 원하시나요?
+        현재 저희가 추천해 줄 수 있는 도시는 '도쿄', '오사카', '교토'입니다.
+        그외의 지역들에 대해서는 Gemini로 넘겨드릴게요!
+        예를들어 '도쿄 일정 만들어줘' 또는 '오사카의 일정 알려줘'와 같이 말씀해주시면 해당 도시의 여행 계획을 도와드릴게요. :)
 
   utter_goodbye:
     - text: |
-        도움이 되셨길 바랍니다 😊
-        멋진 일본 여행 되세요!
-        또 궁금한 점이 있으면 언제든 찾아오세요. 다음에 또 만나요!
+        도움이되었기를 바래요. 즐거운 여행 되세요! 다음에 또 만나요! 👋
 
-  utter_iamabot:
-    - text: "저는 여행 정보를 제공하는 챗봇입니다. 무엇을 도와드릴까요?"
+actions:
+  - action_recommend_city
+  - action_gemini_fallback
 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
+# 새로운 대화가 시작돼도, 이전에 사용자가 입력했던 정보(예: 도시 이름 등)를 기억해서 이어서 사용할 수 있게 합니다.

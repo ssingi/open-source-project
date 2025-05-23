@@ -1,38 +1,24 @@
+# 실제 대화 흐름(시나리오)을 예시로 보여주는 데이터 (ML 모델이 학습함)
 version: "3.1"
 
 stories:
-- story: greet and recommend destination
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: recommend_destination
-    - action: utter_recommend_destination
+# - story: 여행지 추천 흐름
+#   steps:
+#     - intent: plan_city
+#     - slot_was_set:
+#         - city: filled
+#     - action: action_recommend_city
 
-- story: greet and seasonal recommendation
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: seasonal_recommendation
-    - action: utter_seasonal_recommendation
+# - story: 도시 정보가 없는 경우
+#   steps:
+#     - intent: plan_city
+#     - slot_was_set:
+#         - city: null
+#     - action: action_recommend_city
 
-- story: destination recommendation only
-  steps:
-    - intent: recommend_destination
-    - action: utter_recommend_destination
-
-- story: seasonal recommendation only
-  steps:
-    - intent: seasonal_recommendation
-    - action: utter_seasonal_recommendation
-
-- story: goodbye scenario
-  steps:
-    - intent: goodbye
-    - action: utter_goodbye
-
-- story: greet and then seasonal recommendation
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: seasonal_recommendation
-    - action: utter_seasonal_recommendation
+# - story: 지원되지 않는 도시 요청
+#   steps:
+#     - intent: plan_city
+#     - slot_was_set:
+#         - city: filled
+#     - action: action_recommend_city
