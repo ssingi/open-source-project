@@ -26,3 +26,4 @@ models/
 # 라이브러리 설치 경로 제외 (예: rasa 폴더 내 site-packages)
 rasa/
 !rasa/README.md  # 필요하다면 예외 설정
+.env
