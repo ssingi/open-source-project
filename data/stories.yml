@@ -2,6 +2,10 @@
 version: "3.1"
 
 stories:
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop1
 # - story: 여행지 추천 흐름
 #   steps:
 #     - intent: plan_city

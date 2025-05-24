@@ -1,0 +1,5 @@
+*.dll filter=lfs diff=lfs merge=lfs -text
+*.pyd filter=lfs diff=lfs merge=lfs -text
+rasa/Lib/site-packages/clang/native/libclang.dll filter=lfs diff=lfs merge=lfs -text
+rasa/Lib/site-packages/jaxlib/xla_extension.pyd filter=lfs diff=lfs merge=lfs -text
+rasa/Lib/site-packages/tensorflow/python/_pywrap_tensorflow_internal.pyd filter=lfs diff=lfs merge=lfs -text

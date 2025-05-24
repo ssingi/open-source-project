@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 # Python 관련
+=======
+# 가상환경, 라이브러리 제외
+>>>>>>> develop1
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+<<<<<<< HEAD
 
 # Rasa 캐시 및 모델 파일
 .rasa/
@@ -30,3 +35,29 @@ desktop.ini
 
 # 기타
 *.tar.gz
+=======
+*.db
+*.sqlite3
+
+# VSCode나 IDE 설정
+.vscode/
+.idea/
+
+# 시스템 파일
+.DS_Store
+Thumbs.db
+
+# 모델, 캐시, 로그, LFS 대상 제외
+models/
+*.tar.gz
+*.log
+.rasa/
+*.db
+.env
+*.env.*
+
+# 라이브러리 설치 경로 제외 (예: rasa 폴더 내 site-packages)
+rasa/
+!rasa/README.md  # 필요하다면 예외 설정
+.env
+>>>>>>> develop1

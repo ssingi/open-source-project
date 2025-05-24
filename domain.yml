@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 version: "3.1"
 
+=======
+# 챗봇이 어떤 것을 인식하고 말할 수 있는지를 정의하는 중앙 설정 파일
+version: "3.1"
+
+# nlu.yml에서 정의된 의도 나열
+>>>>>>> develop1
 intents:
   - greet
   - recommend_city
@@ -7,6 +14,7 @@ intents:
   - fallback
   - goodbye
 
+<<<<<<< HEAD
 entities:
   - city
 
@@ -14,10 +22,25 @@ slots:
   city:
     type: text
     influence_conversation: true
+=======
+# nlu.yml에서 추출할 엔티티
+entities:
+  - city
+
+# plan_city의 대화에서 저장해야할 정보
+slots:
+  city:
+    type: text
+    influence_conversation: true # true로 설정하면 대화 흐름에 영향을 미침 false로 설정하면 대화 흐름에 영향을 미치지 않음
+>>>>>>> develop1
     mappings:
       - type: from_entity
         entity: city
 
+<<<<<<< HEAD
+=======
+# 챗봇이 사용자에게 보낼 메시지
+>>>>>>> develop1
 responses:
   utter_greet:
     - text: |
@@ -33,7 +56,11 @@ responses:
         예를들어 '도쿄 일정 만들어줘' 또는 '오사카의 일정 알려줘'와 같이 말씀해주시면 해당 도시의 여행 계획을 도와드릴게요. :)
 
   utter_goodbye:
+<<<<<<< HEAD
     - text: |
+=======
+     - text: |
+>>>>>>> develop1
         도움이되었기를 바래요. 즐거운 여행 되세요! 다음에 또 만나요! 👋
 
 actions:
@@ -44,4 +71,7 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 
+<<<<<<< HEAD
 # 새로운 대화가 시작돼도, 이전에 사용자가 입력했던 정보(예: 도시 이름 등)를 기억해서 이어서 사용할 수 있게 합니다.
+=======
+>>>>>>> develop1
