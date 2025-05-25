@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 # Python 관련
-=======
+
 # 가상환경, 라이브러리 제외
->>>>>>> develop1
+
 __pycache__/
 *.pyc
 *.pyo
@@ -35,7 +35,7 @@ desktop.ini
 
 # 기타
 *.tar.gz
-=======
+
 *.db
 *.sqlite3
 
