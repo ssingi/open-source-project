@@ -1,10 +1,11 @@
-
 import discord
 import requests
-import os
 from dotenv import load_dotenv
+import os
 
-load_dotenv()
+# actions 폴더의 .env 파일을 명시적으로 로드
+load_dotenv(dotenv_path=os.path.join("actions", ".env"))
+
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 RASA_URL = "http://localhost:5005/webhooks/rest/webhook"
 
