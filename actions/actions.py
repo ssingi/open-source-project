@@ -15,26 +15,12 @@ class ActionPlanCity(Action):
             tracker: Tracker,
             domain: DomainDict) -> List[Dict[Text, Any]]:
 
+        # 도시 엔티티 추출
         city = next(tracker.get_latest_entity_values("city"), None)
 
-        supported_cities = {
-            "도쿄": "도쿄 2박3일 추천 코스: 1일차-아사쿠사, 우에노, 2일차-시부야, 신주쿠, 3일차-도쿄타워, 오다이바",
-            "오사카": "오사카 2박3일 추천 코스: 1일차-도톤보리, 신사이바시, 2일차-유니버설 스튜디오, 3일차-오사카성, 텐노지",
-            "교토": "교토 2박3일 추천 코스: 1일차-기온, 청수사, 2일차-금각사, 은각사, 3일차-후시미이나리, 아라시야마"
-        }
-
-        if not city:
-            dispatcher.utter_message(text="도시 정보가 없습니다. 죄송해요, 그 질문에는 바로 답변드리기 어려워요. Gemini AI에게 물어볼게요!")
-            return [FollowupAction("action_gemini_fallback")]
-
-        city = city.strip()
-
-        if city in supported_cities:
-            dispatcher.utter_message(text=supported_cities[city])
-            return []
-        else:
-            # 지원하지 않는 도시는 fallback으로 넘김
-            return [FollowupAction("action_gemini_fallback")]
+        # 무조건 Gemini로 폴백
+        dispatcher.utter_message(text="Gemini AI에게 물어볼게요!\n\n")
+        return [FollowupAction("action_gemini_fallback")]
 
 # ✅ Gemini를 통한 장소 추천 Action
 class ActionGeminiFallback(Action):

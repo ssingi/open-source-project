@@ -1,45 +1,57 @@
 # intent로 의도 분류 후 action으로 응답
-# intent: greet, recommend_city, plan_city, fallback, goodbye
+# intent: greet, recommend_question_list, travel_checklist, travel_sim_card, travel_luggage_airport
+#         travel_transportation, travel_money, plan_city, fallback, goodbye
 version: "3.1"
 
 rules:
-
-# 1. 인사 처리
-- rule: 인사에 응답
+- rule: 1. 인사 처리
   steps:
     - intent: greet
     - action: utter_greet
 
-# 2. 여행지 추천 처리
-- rule: 여행지 추천
+- rule: 2. 질문 목록 안내
   steps:
-    - intent: recommend_city
-    - action: utter_recommend_city
+    - intent: recommend_question_list
+    - action: utter_recommend_question_list
 
-# 3. 특정 도시 여행 계획 안내 (도쿄 -> 도쿄, 오사카 -> 오사카, 교토 -> 교토)
-- rule: 특정 도시 여행 계획 안내
+- rule: 3. 여행 준비물 안내
+  steps:
+    - intent: travel_checklist
+    - action: utter_travel_checklist
+  
+- rule: 4. SIM 카드/포켓 와이파이 안내
+  steps:
+  - intent: travel_sim_card
+  - action: utter_travel_sim_card
+
+- rule: 5. 수하물/공항 팁 안내
+  steps:
+  - intent: travel_luggage_airport
+  - action: utter_travel_luggage_airport
+
+- rule: 6. 교통 패스 안내
+  steps:
+  - intent: travel_transportation
+  - action: utter_travel_transportation
+
+- rule: 7. 환전/결제 안내
+  steps:
+  - intent: travel_money
+  - action: utter_travel_money
+
+- rule: 8. 도시 여행 계획 안내
   steps:
     - intent: plan_city
     - slot_was_set:
         - city: filled
     - action: action_recommend_city
 
-# 4. 도시 정보가 없는 경우 처리
-- rule: 도시 정보가 없는 경우 처리
-  steps:
-    - intent: plan_city
-    - slot_was_set:
-        - city: null
-    - action: action_recommend_city
-
-# 5. fallback 처리 (Gemini로 넘김)
-- rule: Gemini로 Fallback
+- rule: 9. Gemini로 Fallback
   steps:
     - intent: fallback
     - action: action_gemini_fallback
 
-# 6. 종료 처리
-- rule: 종료 인사
+- rule: 10. 종료 인사
   steps:
     - intent: goodbye
     - action: utter_goodbye    
