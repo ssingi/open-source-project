@@ -9,6 +9,7 @@ nlu:
     - 안녕
     - 하이
     - 반가워
+    - ㅎㅇ
 
 - intent: goodbye
   examples: |
@@ -16,6 +17,7 @@ nlu:
     - 다음에 또 올게
     - 또 봐
     - 다음에 봐
+    - ㅂㅇ
 
 - intent: recommend_question_list
   examples: |

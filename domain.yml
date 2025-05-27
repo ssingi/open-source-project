@@ -1,4 +1,3 @@
-# 챗봇이 어떤 것을 인식하고 말할 수 있는지를 정의하는 중앙 설정 파일
 version: "3.1"
 
 # nlu.yml에서 정의된 의도 나열
@@ -22,7 +21,7 @@ entities:
 slots:
   city:
     type: text
-    influence_conversation: true # true로 설정하면 대화 흐름에 영향을 미침 false로 설정하면 대화 흐름에 영향을 미치지 않음
+    influence_conversation: true # true로 설정하면 대화 흐름에 영향을 미침
     mappings:
       - type: from_entity
         entity: city
@@ -33,12 +32,11 @@ responses:
     - text: |
         안녕하세요! 일본 여행 계획 도와드리는 AI 챗봇이에요. 어떤 지역에 관심이 있으신가요 ?
         예를들어 '도쿄 일정 만들어줘'와 같이 특정 지역 일정 만들어줘 라고 말씀드리면 만들어 줄 수 있어요. 😊
-        아직 지역을 못정하셧다면 '일본 여행지 추천해줘'라고 말씀해주시면 추천해드릴게요!
-        일본 여행에 대해 궁금한 점이 있다면 "가능한 질문 목록"이라고 물어주세요!
+        일본 여행이 처음이시거나 일본 여행에 대해 궁금한 점이 있다면 "가능한 질문 목록"이라고 물어주세요! 
 
   utter_recommend_question_list:
     - text: |
-        다음과 같은 질문을 할 수 있어요! 😊
+        다음과 같은 질문을 하실 수 있어요! 😊
         - 일본 여행지 추천해줘
         - 일본의 도시별 특징 알려줘
         - 도쿄 일정 만들어줘
@@ -101,13 +99,15 @@ responses:
 
   utter_gemini_fallback:
     - text: |
-        Rasa에 있는 질문이 아니에요. Gemini로 넘겨드릴게요! 잠시만 기다려주세요.
+        잠시만 기다려주세요..  Gemini로 넘겨드릴게요! 🤖
+
 
   utter_goodbye:
      - text: |
         도움이되었기를 바래요. 즐거운 여행 되세요! 다음에 또 만나요! 👋
 
 actions:
+  # 사용자 요청에 따라 챗봇이 실행할 액션 목록
   - action_recommend_city
   - action_gemini_fallback
 
