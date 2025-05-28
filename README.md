@@ -24,6 +24,7 @@
 
 - 사용한 Intents에 대해 확인하고 싶어요. -> [📁 Intents 목록 및 설명](https://github.com/ssingi/open-source-project/wiki/Intents-%EB%AA%A9%EB%A1%9D-%EB%B0%8F-%EC%84%A4%EB%AA%85)
 
+- 해당 프로젝트의 API 설정을 보고 싶어요 -> [💻 API 사용](https://github.com/ssingi/open-source-project/wiki/%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95)
 
 ## 📝 라이선스
 
