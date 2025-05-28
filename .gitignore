@@ -1,12 +1,10 @@
-# 가상환경, 라이브러리 제외
+# Python 캐시 및 컴파일 파일
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
 *.db
 *.sqlite3
 
-# VSCode나 IDE 설정
+# IDE 설정
 .vscode/
 .idea/
 
@@ -14,30 +12,34 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# 모델, 캐시, 로그, LFS 대상 제외
+# Rasa 모델 및 캐시
 models/
 *.tar.gz
-*.log
-.rasa/
-*.db
-
-# 라이브러리 설치 경로 제외 (예: rasa 폴더 내 site-packages)
-rasa/
-!rasa/README.md  # 필요하다면 예외 설정
-
-# 추가: 파이썬 가상환경 폴더
-venv/
-rasa310/
-
-# 추가: 캐시 및 임시 폴더
 .rasa/
 .rasa/cache/
 .rasa/tmp_*/
 
-# 추가: 기타 임시 파일
+# 로그 및 임시 파일
+*.log
 *.swp
 *.swo
 
-# 추가: 환경설정 파일
+# 가상환경
+venv/
+rasa310/
+
+# 환경 변수
 .env
 .env.*
+
+# 패키지 디렉토리 제외 (로컬 설치된 rasa 내부)
+rasa/
+!rasa/README.md  # 필요하면 예외
+
+# 기타 백업/임시 파일
+*.bak
+
+# actions 디렉토리 내 임시/캐시 폴더
+actions/__pycache__/
+actions/.cph/
+actions/models/

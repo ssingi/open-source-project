@@ -2,24 +2,3 @@
 version: "3.1"
 
 stories:
-
-# - story: 여행지 추천 흐름
-#   steps:
-#     - intent: plan_city
-#     - slot_was_set:
-#         - city: filled
-#     - action: action_recommend_city
-
-# - story: 도시 정보가 없는 경우
-#   steps:
-#     - intent: plan_city
-#     - slot_was_set:
-#         - city: null
-#     - action: action_recommend_city
-
-# - story: 지원되지 않는 도시 요청
-#   steps:
-#     - intent: plan_city
-#     - slot_was_set:
-#         - city: filled
-#     - action: action_recommend_city
